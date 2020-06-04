@@ -19,7 +19,7 @@ async function main() {
 
         // Create a new CA client for interacting with the CA.
         const caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
-        const ca = new FabricCAServices(caURL);
+        const ca = new FabricCAServices(caURL); //fabric-ca-client 객체 생성
 
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
@@ -46,7 +46,10 @@ async function main() {
         const adminUser = await provider.getUserContext(adminIdentity, 'admin');
 
         // Register the user, enroll the user, and import the new identity into the wallet.
-        const secret = await ca.register({
+        //fabric-ca-client.register 메소드 호출  
+        //enrollmentID, enrollmentSecret, role, affiliation, maxEnrollments, attrs, signingIdentity 를 매개변수로 받음
+        //https://hyperledger.github.io/fabric-sdk-node/release-1.4/FabricCAClient.html
+        const secret = await ca.register({  
             affiliation: 'org1.department1',
             enrollmentID: 'appUser',
             role: 'client'
